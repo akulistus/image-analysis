@@ -18,9 +18,7 @@ plt.show()
 # conected components
 inverted_image = cv.bitwise_not(thresh2)
 num_labels, labels = cv.connectedComponents(inverted_image, connectivity=4)
-print(num_labels)
 label_hue = np.uint8(500*labels/np.max(labels))
-print(label_hue)
 blank_ch = 255*np.ones_like(label_hue)
 labeled_img = cv.merge([label_hue, blank_ch, blank_ch])
 
@@ -32,3 +30,40 @@ plt.imshow(cv.cvtColor(labeled_img, cv.COLOR_BGR2RGB))
 plt.axis('off')
 plt.title("Image after Component Labeling")
 plt.show()
+
+# histogramm equalization
+# numpy
+img = cv.imread(cv.samples.findFile("images/landscape.jpg"), cv.IMREAD_GRAYSCALE)
+hist,bins = np.histogram(img.flatten(),256,[0,256])
+
+cdf = hist.cumsum()
+cdf_normalized = cdf * float(hist.max()) / cdf.max()
+
+plt.plot(cdf_normalized, color = 'b')
+plt.hist(img.flatten(),256,[0,256], color = 'r')
+plt.xlim([0,256])
+plt.legend(('cdf','histogram'), loc = 'upper left')
+plt.show()
+
+cdf_m = np.ma.masked_equal(cdf,0)
+cdf_m = (cdf_m - cdf_m.min())*255/(cdf_m.max()-cdf_m.min())
+cdf = np.ma.filled(cdf_m,0).astype('uint8')
+
+img2 = cdf[img]
+
+plt.plot(cdf_m, color = 'b')
+plt.hist(img2.flatten(),256,[0,256], color = 'r')
+plt.xlim([0,256])
+plt.legend(('cdf','histogram'), loc = 'upper left')
+plt.show()
+
+res = np.hstack((img,img2))
+cv.imshow("OpenCV equalization", res)
+cv.waitKey(0)
+
+# opencv
+plt.show()
+equ = cv.equalizeHist(img)
+res = np.hstack((img,equ))
+cv.imshow("OpenCV equalization", res)
+cv.waitKey(0)
