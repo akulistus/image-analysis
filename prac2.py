@@ -1,7 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import cv2 as cv
-import sys
 
 # binary image using threshold
 img = cv.imread(cv.samples.findFile("images/cat1.jpg"), cv.IMREAD_GRAYSCALE)
