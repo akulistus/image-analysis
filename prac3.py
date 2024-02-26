@@ -21,7 +21,7 @@ plt.title('Sobel Y'), plt.xticks([]), plt.yticks([])
 plt.show()
 
 # blur img using blur, boxFilter, gussian
-
+# найти норм картинку!!!!!!!!!!!!!!!!
 img = cv.imread(cv.samples.findFile("images/frog.jpg"))
 blur = cv.blur(img, ksize=(5,5))
 boxFilter = cv.boxFilter(img, cv.CV_64F, ksize=(5,5))
@@ -51,7 +51,7 @@ dst = cv.filter2D(img, -1, kernel)
 
 plt.subplot(1,2,1),plt.imshow(img),plt.title('Original')
 plt.xticks([]), plt.yticks([])
-plt.subplot(1,2,2),plt.imshow(dst),plt.title('Blurred(cv.gussian)')
+plt.subplot(1,2,2),plt.imshow(dst),plt.title('Blurred(cv.filter2D)')
 plt.xticks([]), plt.yticks([])
 plt.show()
 
