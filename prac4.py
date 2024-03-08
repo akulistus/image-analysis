@@ -43,21 +43,21 @@ plt.show()
 
 # median filtering
 # поменять на N-порядок
-def medinaFilter(img, ksize):
+def medinaFilter(img, ksize, N):
     final = np.zeros(img.shape)
 
     size = ksize//2
-    for y in range(size,img.shape[0]-1):
-        for x in range(size,img.shape[1]-1):
+    for y in range(size,img.shape[0]-size):
+        for x in range(size,img.shape[1]-size):
             kernel = img[y-size:y+size+1, x-size:x+size+1].copy()
-            kernel.sort()
-            final[y, x] = kernel[size//2][size//2]
+            kernel = np.sort(np.array(kernel).flatten())
+            final[y, x] = kernel[N]
 
     return final
 
-denoise_3 = medinaFilter(in_img, 3)
-denoise_5 = medinaFilter(in_img, 5)
-denoise_7 = medinaFilter(in_img, 7)
+denoise_3 = medinaFilter(in_img, 3, 1)
+denoise_5 = medinaFilter(in_img, 5, 1)
+denoise_7 = medinaFilter(in_img, 7, 1)
 
 # make image bigger
 plt.subplot(3,2,1),plt.imshow(in_img,cmap = 'gray')

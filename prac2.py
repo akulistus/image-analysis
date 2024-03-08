@@ -14,12 +14,11 @@ for i in range(4):
     plt.xticks([]),plt.yticks([])
 plt.show()
 
-img = cv.imread(cv.samples.findFile("images/forComp.jpg"), cv.IMREAD_GRAYSCALE)
-
+img = cv.imread(cv.samples.findFile("images/forComp.jpg"), 0)
+img = cv.threshold(img, 127, 255, cv.THRESH_BINARY)[1]
 # conected components
 # тут посмотреть
 num_labels, labels = cv.connectedComponents(img, connectivity=4)
-print(num_labels)
 label_hue = np.uint8(179*labels/np.max(labels))
 blank_ch = 255*np.ones_like(label_hue)
 labeled_img = cv.merge([label_hue, blank_ch, blank_ch])
