@@ -53,6 +53,7 @@ w, h = dog.shape[::-1]
 res = cv.matchTemplate(dogs, dog, cv.TM_CCORR_NORMED)
 min_val, max_val, min_loc, max_loc = cv.minMaxLoc(res)
 top_left = max_loc
+print(top_left)
 bottom_right = (top_left[0] + w, top_left[1] + h)
 cv.rectangle(dogs,top_left, bottom_right, 255, 2)
 plt.subplot(121),plt.imshow(res,cmap = 'gray')

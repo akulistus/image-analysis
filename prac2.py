@@ -14,10 +14,27 @@ for i in range(4):
     plt.xticks([]),plt.yticks([])
 plt.show()
 
+img = cv.imread(cv.samples.findFile("images/forComp.jpg"), cv.IMREAD_GRAYSCALE)
+
 # conected components
-inverted_image = cv.bitwise_not(thresh2)
-num_labels, labels = cv.connectedComponents(inverted_image, connectivity=4)
-label_hue = np.uint8(500*labels/np.max(labels))
+# тут посмотреть
+num_labels, labels = cv.connectedComponents(img, connectivity=4)
+print(num_labels)
+label_hue = np.uint8(179*labels/np.max(labels))
+blank_ch = 255*np.ones_like(label_hue)
+labeled_img = cv.merge([label_hue, blank_ch, blank_ch])
+
+labeled_img = cv.cvtColor(labeled_img, cv.COLOR_HSV2BGR)
+
+labeled_img[label_hue == 0] = 0
+
+plt.imshow(cv.cvtColor(labeled_img, cv.COLOR_BGR2RGB))
+plt.axis('off')
+plt.title("Image after Component Labeling")
+plt.show()
+
+num_labels, labels = cv.connectedComponents(img, connectivity=8)
+label_hue = np.uint8(178*labels/np.max(labels))
 blank_ch = 255*np.ones_like(label_hue)
 labeled_img = cv.merge([label_hue, blank_ch, blank_ch])
 
@@ -33,7 +50,7 @@ plt.show()
 # histogramm equalization
 # numpy
 img = cv.imread(cv.samples.findFile("images/landscape.jpg"), cv.IMREAD_GRAYSCALE)
-hist,bins = np.histogram(img.flatten(),256,[0,256])
+hist,bins = np.histogram(img.flatten(),256, [0,256])
 
 cdf = hist.cumsum()
 cdf_normalized = cdf * float(hist.max()) / cdf.max()

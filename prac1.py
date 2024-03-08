@@ -2,7 +2,7 @@ import matplotlib.pyplot as plt
 import cv2 as cv
 import sys
 
-img = cv.imread(cv.samples.findFile("images/cat.jpg"))
+img = cv.imread(cv.samples.findFile("images/flash_from_img.jpg"))
 
 if img is None:
     sys.exit("Could not read image.")
@@ -14,11 +14,11 @@ k = cv.waitKey(0)
 #     cv.imwrite("new_img.png", img)
 
 # pixel color
-px = img[100, 100]
+px = img[40, 10]
 print(f"Color of pixel = {px}")
 
 # modify pixel color
-img[100, 100] = [0, 255, 0]
+img[40, 10] = [255, 255, 255]
 cv.imshow("Diss", img)
 k = cv.waitKey(0)
 
@@ -31,6 +31,8 @@ print(f"Total number of pixels {img.size}")
 # get datatype 
 print(f"Datatype {img.dtype}")
 
+img = cv.imread(cv.samples.findFile("images/flash_from_img.jpg"), cv.IMREAD_GRAYSCALE)
+
 # zoom/shrink image 2x
 res_shrink = cv.resize(img, None, fx=0.5, fy=0.5, interpolation=cv.INTER_AREA)
 res_zoom = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_CUBIC)
@@ -42,15 +44,15 @@ cv.imshow("2x", res_zoom)
 k = cv.waitKey(0)
 
 # zoom 2x whith nearest, linear, cubic
-res = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_NEAREST)
+res = cv.resize(img, None, fx=6, fy=6, interpolation=cv.INTER_NEAREST)
 cv.imshow("x2_NEAREST", res)
 k = cv.waitKey(0)
 
-res = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_LINEAR)
+res = cv.resize(img, None, fx=6, fy=6, interpolation=cv.INTER_LINEAR)
 cv.imshow("x2_LINEAR", res)
 k = cv.waitKey(0)
 
-res = cv.resize(img, None, fx=2, fy=2, interpolation=cv.INTER_CUBIC)
+res = cv.resize(img, None, fx=6, fy=6, interpolation=cv.INTER_CUBIC)
 cv.imshow("x2_CUBIC", res)
 k = cv.waitKey(0)
 
@@ -60,6 +62,7 @@ plt.hist(img_gray.ravel(), 256, [0, 256])
 plt.show()
 
 # color image
+img = cv.imread("images/cat.jpg")
 for i in range(3):
     histr = cv.calcHist([img], [i], None, [256], [0, 256])
     plt.plot(histr)

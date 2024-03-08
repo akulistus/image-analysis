@@ -42,7 +42,7 @@ plt.title('Edge Image'), plt.xticks([]), plt.yticks([])
 plt.show()
 
 # median filtering
-
+# поменять на N-порядок
 def medinaFilter(img, ksize):
     final = np.zeros(img.shape)
 
